@@ -6,9 +6,9 @@ const router= express.Router();
 const Contact= require("../models/Contacts")
 
 // test route
-router.get('/', (req,res)=> {
+/*router.get('/', (req,res)=> {
     res.send('test')
-})
+})*/
 //first route post
 //post
 router.post("/add",async(req, res)=>{
@@ -24,4 +24,45 @@ router.post("/add",async(req, res)=>{
 
     }
 } )
+
+// get all contacts
+router.get('/', async(req,res)=> {
+    try{
+       const contacts=await Contact.find();
+       res.send({msg: 'data fetched', contacts})
+    }
+    catch(error) {
+      console.log(error)
+    }
+})
+
+// DELETE
+router.delete('/delete/:id', async(req,res)=>{
+    const {id}= req.params
+    try {
+      
+        const contact= await Contact.findOneAndDelete({_id: id})
+        res.send({msg: 'contact deleted', contact})
+    }
+    catch(error) {
+         
+        console.log(error)
+    }
+})
+
+// UPDATE
+router.put('/edit/:id', async (req,res)=> {
+    const {id}= req.params
+
+    try {
+        const contact= await Contact.findByIdAndUpdate({_id:id}, {$set: req.body})
+        res.send({msg: "contact edited", contact})
+    }
+
+    catch(error) {
+        console.log(error)
+    }
+  
+} )
+
 module.exports= router
