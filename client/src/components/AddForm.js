@@ -1,25 +1,21 @@
-import {Button,Input, Label, FormGroup, Form} from 'reactstrap';
-import {Navigate} from 'react-router-dom'
-import {useState} from 'react';
+import React,{useState} from 'react'
 import { useDispatch } from 'react-redux';
-import { addContact } from '../redux/actions/contactActions';
+import { Navigate } from 'react-router-dom';
+
+import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import {addContact} from "../redux/actions/contactActions"
 
 function AddForm() {
-  const [email, setEmail]= useState('');
-  const [name, setName]= useState('');
-  const [phone, setPhone]= useState('');
-  const [cancel, setCancel]= useState(false)
-   
-  // dispatch
-  const dispatch= useDispatch
-  const add=()=> {
+  const [email,setEmail]=useState("")
+  const [phone,setPhone]=useState("")
+  const[name,setName]=useState("")
+  const[cancel,setCancel]=useState(false)
+  const dispatch=useDispatch()
+  const add=()=>{
     const newContact={email,phone,name}
     dispatch(addContact(newContact))
     setCancel(!cancel)
   }
-
-
-
   return (
     <>
     {cancel?(
